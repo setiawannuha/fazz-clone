@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Navbar from "@/components/organisms/Navbar.vue";
+  import Navbar from "@/components/organisms/Navbar.vue"
 </script>
 
 <template>
@@ -9,4 +9,7 @@ import Navbar from "@/components/organisms/Navbar.vue";
   <main class="min-h-screen pt-16 bg-white">
     <RouterView />
   </main>
+  <footer>
+    <Footer/>
+  </footer>
 </template>
