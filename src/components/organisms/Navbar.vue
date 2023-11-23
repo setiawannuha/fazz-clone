@@ -10,7 +10,6 @@ import { RouterLink } from "vue-router";
 import logo from "@/assets/logo.png";
 import { state } from "@/store/user/user.store";
 
-const loggedIn = state.data.token
 
 </script>
 <template>
@@ -37,6 +36,23 @@ const loggedIn = state.data.token
           tabindex="0"
           class="menu font-semibold dropdown-content mt-2 z-[1] p-2 shadow border bg-white rounded-lg w-screen -ml-3"
         >
+        <li>
+          <div v-if="state.data.token" class="">
+            <RouterLink to="/profile" class="flex justify-start items-center gap-3">
+              <div class="rounded-full overflow-hidden border-2 border-primary w-12 h-12">
+                <img src="https://i.pravatar.cc/50" alt="" class="object-cover">
+              </div>
+              <div>
+                <div class="capitalize font-semibold tracking-wider text-base">
+                  {{ state.data.email.split('@')[0] }}
+                </div>
+                <div class="text-xs">
+                  {{ state.data.email }}
+                </div>
+              </div>
+            </RouterLink>
+          </div>
+        </li>
           <li tabindex="0">
             <details>
               <summary>Kelas</summary>
@@ -131,7 +147,7 @@ const loggedIn = state.data.token
         </li>
       </ul>
     </div>
-    <div v-if="!loggedIn" class="space-x-2 md:space-x-3 navbar-end">
+    <div v-if="!state.data.token" class="space-x-2 md:space-x-3 navbar-end">
       <RouterLink to="/login" class="btn btn-md btn-primary btn-outline"
         >Masuk</RouterLink
       >
@@ -139,7 +155,7 @@ const loggedIn = state.data.token
         >Daftar</RouterLink
       >
     </div>
-    <div v-if="loggedIn" class="space-x-2 md:space-x-3 navbar-end">
+    <div v-if="state.data.token" class="hidden md:flex space-x-2 md:space-x-3 navbar-end">
       <RouterLink to="/profile" class="flex justify-start items-center gap-3">
         <div class="rounded-full overflow-hidden border-2 border-primary w-12 h-12">
           <img src="https://i.pravatar.cc/50" alt="" class="object-cover">

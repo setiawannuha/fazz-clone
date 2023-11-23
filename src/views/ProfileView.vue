@@ -4,26 +4,25 @@ import { state } from "@/store/user/user.store";
 import { onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 
-const loggedIn = state.data.token
 const router =  useRouter()
 
 onMounted(() => {
-    if(!loggedIn){
-        router.push('/')
-    }
+  if(!state.data.token){
+    router.push('/')
+  }
 })
 </script>
 
 <template>
     <div>
         <section class="w-full flex justify-center items-start py-16">
-            <div class="w-full max-w-[1080px] flex justify-between items-start gap-5">
-                <div class="w-96 flex flex-col gap-5">
+            <div class="w-full max-w-[1080px] flex flex-col lg:flex-row justify-between items-center lg:items-start gap-5">
+                <div class="px-5 md:px-16 lg:px-0 w-full  lg:w-96 flex flex-col gap-5">
                     <div class="w-full flex flex-col justify-center items-center gap-7 pt-11 border">
                         <div class="w-36 rounded-full overflow-hidden">
                             <img src="https://i.pravatar.cc/300" alt="" class="object-cover">
                         </div>
-                        <div v-if="loggedIn" class="text-center w-full text-black text-xl font-semibold px-5 capitalize">
+                        <div v-if="state.data.token" class="text-center w-full text-black text-xl font-semibold px-5 capitalize">
                             {{ state.data.email.split('@')[0] }}
                         </div>
                         <div v-else class="text-center w-full text-black text-xl font-semibold px-5 capitalize">
@@ -39,11 +38,11 @@ onMounted(() => {
                     <div class="w-full border p-5">
                         I am a Full Stack Developer who has a passion for the IT field. I have experience in PHP and JavaScript to develop web and mobile applications, especially for the Android Platform. I have several programming skills, such as Codeigniter, Laravel, React Native, React.js, and Node.js. I am a fast learner, adaptable, and collaborative in a team
                         <br />
-                        <p v-if="loggedIn" class="pt-2">{{ state.data.email }}</p>
+                        <p v-if="state.data.token" class="pt-2">{{ state.data.email }}</p>
                         <p v-else class="pt-2">user@gmail.com</p>
                     </div>
                 </div>
-                <div class="w-full flex flex-col gap-9">
+                <div class="w-full flex flex-col gap-9 px-5 md:px-16 lg:px-0 ">
                     <div class="w-full flex justify-between items-center">
                         <nav class="">
                             <div class="w-full flex justify-start items-center gap-7 py-5 font-bold text-slate-500 ">
@@ -108,20 +107,22 @@ onMounted(() => {
                             <div class="bg-slate-200 w-16 h-16 flex justify-center items-center rounded-md">
                                 <font-awesome-icon icon="fa-solid fa-star" class="text-2xl text-slate-500"/>
                             </div>
-                            <div class="text-slate-500 bg-slate-200 px-2 rounded-md font-semibold">
-                                Codeigniter
-                            </div>
-                            <div class="text-slate-500 bg-slate-200 px-2 rounded-md font-semibold">
-                                Codeigniter
-                            </div>
-                            <div class="text-slate-500 bg-slate-200 px-2 rounded-md font-semibold">
-                                Codeigniter
-                            </div>
-                            <div class="text-slate-500 bg-slate-200 px-2 rounded-md font-semibold">
-                                Codeigniter
-                            </div>
-                            <div class="text-slate-500 bg-slate-200 px-2 rounded-md font-semibold">
-                                Codeigniter
+                            <div class=" overflow-scroll flex gap-3 flex-1">
+                                <div class="text-slate-500 bg-slate-200 px-2 rounded-md font-semibold">
+                                    Codeigniter
+                                </div>
+                                <div class="text-slate-500 bg-slate-200 px-2 rounded-md font-semibold">
+                                    Codeigniter
+                                </div>
+                                <div class="text-slate-500 bg-slate-200 px-2 rounded-md font-semibold">
+                                    Codeigniter
+                                </div>
+                                <div class="text-slate-500 bg-slate-200 px-2 rounded-md font-semibold">
+                                    Codeigniter
+                                </div>
+                                <div class="text-slate-500 bg-slate-200 px-2 rounded-md font-semibold">
+                                    Codeigniter
+                                </div>
                             </div>
                         </div>
                         
