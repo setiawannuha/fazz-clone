@@ -1,3 +1,11 @@
+<script lang="ts">
+  export default {
+    name: 'FooterComponent',
+    inheritAttrs: false,
+    customOptions: {}
+  }
+</script>
+
 <script setup lang="ts">
 import logo from "@/assets/logo.png";
 import instagram from "@/assets/instagram.svg";

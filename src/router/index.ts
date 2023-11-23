@@ -54,6 +54,11 @@ const router = createRouter({
       component: () => import("../views/OnlineCourseView.vue"),
       beforeEnter: authGuard,
     },
+    {
+      path: "/minicamp",
+      name: "Minicamp",
+      component: () => import("../views/MinicampView.vue"),
+    },
   ],
 });
 
