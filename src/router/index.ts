@@ -32,6 +32,11 @@ const router = createRouter({
       name: "online course",
       component: () => import("../views/OnlineCourseView.vue"),
     },
+    {
+      path: "/minicamp",
+      name: "Minicamp",
+      component: () => import("../views/MinicampView.vue"),
+    },
   ],
 });
 
