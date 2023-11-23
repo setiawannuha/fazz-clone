@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import Footer from '@/components/organisms/Footer.vue';
 import { onMounted, ref } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+import { useRoute, useRouter, RouterLink } from 'vue-router';
 import {getMinicamp} from '@/store/get/minicamp'
 import {state} from "@/store/minicamp/minicamp.store"
 
@@ -79,9 +79,9 @@ import {state} from "@/store/minicamp/minicamp.store"
                                 />
                             </figure>
                             <div class="card-body">
-                                <h2 class="card-title">
+                                <RouterLink :to="`/minicamp/${item?.id}`" class="card-title">
                                     {{ item?.title }}
-                                </h2>
+                                </RouterLink>
                                 <p class="text-base text-slate-500">
                                     {{ item?.startDate }} - {{ item?.endDate }}
                                 </p>
