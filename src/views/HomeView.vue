@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import Footer from "@/components/organisms/Footer.vue";
 import { state } from "@/store/user/user.store";
 </script>
 
@@ -783,5 +784,6 @@ import { state } from "@/store/user/user.store";
             Daftar Sekarang
         </RouterLink>
     </section>
+    <Footer/>
   </main>
 </template>
