@@ -41,9 +41,9 @@ const handleSubmit = () => {
 </script>
 
 <template>
-  <div class="w-full flex justify-center py-12">
+  <div class="w-full flex justify-center px-5 py-12">
     <div
-      class="flex flex-col justify-center items-center max-w-2xl w-full border px-16 py-12"
+      class="flex flex-col justify-center items-center max-w-2xl w-full border px-5 lg:px-16 py-12"
     >
       <RouterLink to="/" class="mb-5"
         ><img :src="logo" class="w-24" alt=""

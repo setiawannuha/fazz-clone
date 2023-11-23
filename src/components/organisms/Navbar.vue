@@ -10,7 +10,7 @@ import { RouterLink } from "vue-router";
 import logo from "@/assets/logo.png";
 </script>
 <template>
-  <div class="px-3 shadow md:px-10 lg:px-20 navbar">
+  <div class="px-3 shadow md:px-10 lg:px-20 navbar bg-white">
     <div class="navbar-start">
       <div class="dropdown">
         <label tabindex="0" class="btn btn-ghost lg:hidden">

@@ -33,9 +33,9 @@ const handleSubmit = () => {
 </script>
 
 <template>
-  <div class="w-full flex justify-center py-12">
+  <div class="w-full flex justify-center py-12 px-5">
     <div
-      class="flex flex-col justify-center items-center max-w-2xl w-full border px-16 py-12"
+      class="flex flex-col justify-center items-center max-w-2xl w-full border px-5 lg:px-16 py-12"
     >
       <RouterLink to="/" class="mb-5"
         ><img :src="logo" class="w-24" alt=""
@@ -43,8 +43,8 @@ const handleSubmit = () => {
       <div class="text-center mb-10">
         <h3 class="text-xl font-semibold mb-2">Daftar & Mulai Belajar</h3>
         <p>
-          Sudah punya akun Fazztrack?
-          <span class="text-[#f16d1b]"> Masuk disini </span>
+          Belum punya akun Fazztrack?
+          <span class="text-[#f16d1b] font-semibold"> Daftar Disini </span>
         </p>
       </div>
       <form class="w-full flex flex-col gap-4" @submit.prevent="handleSubmit">
