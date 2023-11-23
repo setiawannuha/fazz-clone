@@ -1,22 +1,38 @@
 <script lang="ts">
-  export default {
-    name: 'NavbarComponent',
-    inheritAttrs: false,
-    customOptions: {}
-  }
+export default {
+  name: "NavbarComponent",
+  inheritAttrs: false,
+  customOptions: {},
+};
 </script>
 <script lang="ts" setup>
-import { RouterLink } from 'vue-router'
-import logo from "@/assets/logo.png"
+import { RouterLink } from "vue-router";
+import logo from "@/assets/logo.png";
 </script>
 <template>
-  <div class="px-3 shadow md:px-10 lg:px-20 navbar">
+  <div class="px-3 shadow md:px-10 lg:px-20 navbar bg-white">
     <div class="navbar-start">
       <div class="dropdown">
         <label tabindex="0" class="btn btn-ghost lg:hidden">
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-5 h-5"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M4 6h16M4 12h8m-8 6h16"
+            />
+          </svg>
         </label>
-        <ul tabindex="0" class="menu font-semibold dropdown-content mt-2 z-[1] p-2 shadow border bg-white rounded-lg w-screen -ml-3">
+        <ul
+          tabindex="0"
+          class="menu font-semibold dropdown-content mt-2 z-[1] p-2 shadow border bg-white rounded-lg w-screen -ml-3"
+        >
           <li tabindex="0">
             <details>
               <summary>Kelas</summary>
@@ -61,7 +77,9 @@ import logo from "@/assets/logo.png"
           </li>
         </ul>
       </div>
-      <RouterLink to="/" class=""><img :src="logo" class="w-28" alt=""/></RouterLink>
+      <RouterLink to="/" class=""
+        ><img :src="logo" class="w-28" alt=""
+      /></RouterLink>
     </div>
     <div class="hidden navbar-center lg:flex">
       <ul class="px-1 space-x-3 font-semibold menu menu-horizontal">
@@ -110,8 +128,12 @@ import logo from "@/assets/logo.png"
       </ul>
     </div>
     <div class="space-x-2 md:space-x-3 navbar-end">
-      <RouterLink to="/login" class="btn btn-md btn-primary btn-outline">Masuk</RouterLink>
-      <RouterLink to="/register" class="btn btn-md btn-primary">Daftar</RouterLink>
+      <RouterLink to="/login" class="btn btn-md btn-primary btn-outline"
+        >Masuk</RouterLink
+      >
+      <RouterLink to="/register" class="btn btn-md btn-primary"
+        >Daftar</RouterLink
+      >
     </div>
   </div>
 </template>

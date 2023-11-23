@@ -1,0 +1,18 @@
+<template>
+  <svg
+    data-v-cf1ec82f=""
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+    aria-hidden="true"
+    role="img"
+    class="icon text-yellow-400"
+    width="16px"
+    height="16px"
+    viewBox="0 0 24 24"
+  >
+    <path
+      fill="currentColor"
+      d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.62L12 2L9.19 8.62L2 9.24l5.45 4.73L5.82 21L12 17.27Z"
+    ></path>
+  </svg>
+</template>

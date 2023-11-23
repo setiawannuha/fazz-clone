@@ -5,62 +5,83 @@
     customOptions: {}
   }
 </script>
+
 <script setup lang="ts">
-    import imgLogo from '../../assets/logo.png'
+import logo from "@/assets/logo.png";
+import instagram from "@/assets/instagram.svg";
+import facebook from "@/assets/facebook.svg";
+import youtube from "@/assets/youtube.svg";
+import Phone from "@/components/icons/IconPhone.vue";
+import Mail from "@/components/icons/IconMail.vue";
 </script>
 
 <template>
-    <section class="w-full flex justify-center items-center px-2 md:px-0">
-       <div class="w-full max-w-[1080px] flex flex-col justify-center items-center">
-         <div class="w-full flex flex-col lg:flex-row justify-between items-start gap-11 py-11 border-b-2">
-           <div class="w-full lg:w-96 flex flex-col gap-7">
-             <div>
-               <img :src="imgLogo" class="w-36" alt="" />
-             </div>
-             <div class="text-black">
-               Fazztrack adalah program pelatihan yang berkomitmen untuk mencetak
-               developer yang profesional dan memberikan kesempatan untuk
-               berkarir di perusahaan ternama.
-             </div>
-           </div>
-           <div class="w-full grid grid-cols-2 lg:grid-cols-4 gap-5">
-             <div class="w-40 text-black flex flex-col justify-start items-start gap-2">
-               <div class="font-semibold text-xl mb-3">Kelas</div>
-               <div>Flullstack Mobile</div>
-               <div>Fullstack Website dan Golang</div>
-               <div>Mini Bootcamp</div>
-               <div>Online Course</div>
-             </div>
-             <div class="w-40 text-black flex flex-col justify-start items-start gap-2">
-               <div class="font-semibold text-xl mb-3">Dukungan</div>
-               <div>Cicilan Setelah Kerja (ISA)</div>
-               <div>FAQ</div>
-               <div>Corporate Training</div>
-               <div>Hire Our Graduates</div>
-             </div>
-             <div class="w-40 text-black flex flex-col justify-start items-start gap-2">
-               <div class="font-semibold text-xl mb-3">Tentang</div>
-               <div>Cerita Alumni</div>
-               <div>Sekilas Fazztrack</div>
-             </div>
-             <div class="w-40 text-black flex flex-col justify-start items-start gap-2">
-               <div class="font-semibold text-xl mb-3">Social Media</div>
-               <div>Instagram</div>
-               <div>Facebook</div>
-               <div>Youtube</div>
-             </div>
-           </div>
-         </div>
-         <div class="py-8 w-full flex flex-col-reverse lg:flex-row justify-between items-center">
-           <div class="text-black w-full flex justify-start items-center">
-             <div class="font-semibold">© 2020 - 2023 Fazztrack.</div>
-             <div>All Rights Reserved</div>
-           </div>
-           <div class="flex flex-col md:flex-row justify-end items-start text-black lg:gap-5 w-full pb-2 md:pb-0">
-             <div>+6281132010888</div>
-             <div>hello@fazztrack.com</div>
-           </div>
-         </div>
-       </div>
-     </section>
- </template>
+  <div class="px-5 lg:px-20">
+    <div class="grid grid-cols-6 gap-5">
+      <div class="col-span-6 lg:col-span-2">
+        <img :src="logo" alt="fazztrack logo" class="w-36 mb-5" />
+        <p class="text-neutral">
+          Fazztrack adalah program pelatihan yang berkomitmen untuk mencetak
+          developer yang profesional dan memberikan kesempatan untuk berkarir di
+          perusahaan ternama.
+        </p>
+      </div>
+
+      <div class="col-span-3 lg:col-span-1">
+        <h4 class="text-xl font-semibold mb-6">Kelas</h4>
+        <div class="flex flex-col gap-5 text-neutral">
+          <span>Fullstack Mobile</span>
+          <span>Fullstack Website Dan Golang</span>
+          <span>Mini Bootcamp</span>
+          <span>Online Course</span>
+        </div>
+      </div>
+
+      <div class="col-span-3 lg:col-span-1">
+        <h4 class="text-xl font-semibold mb-6">Dukungan</h4>
+        <div class="flex flex-col gap-5 text-neutral">
+          <span>Cicilan Setelah Kerja (ISA)</span>
+          <span>FAQ</span>
+          <span>Corporate Training</span>
+          <span>Hire Our Graduates</span>
+        </div>
+      </div>
+
+      <div class="col-span-3 lg:col-span-1">
+        <h4 class="text-xl font-semibold mb-6">Tentang</h4>
+        <div class="flex flex-col gap-5 text-neutral">
+          <span>Cerita Alumni</span>
+          <span>Sekilas Fazztrack</span>
+        </div>
+      </div>
+
+      <div class="col-span-3 lg:col-span-1">
+        <h4 class="text-xl font-semibold mb-6">Social Media</h4>
+        <div class="flex flex-col gap-5 text-neutral">
+          <span class="flex gap-2 items-center"
+            ><img :src="instagram" alt="instagram logo" /> Instagram</span
+          >
+          <span class="flex gap-2 items-center"
+            ><img :src="facebook" alt="facebook logo" />Facebook</span
+          >
+          <span class="flex gap-2 items-center"
+            ><img :src="youtube" alt="youtube logo" />Youtube</span
+          >
+        </div>
+      </div>
+    </div>
+
+    <hr class="my-7" />
+
+    <div class="flex justify-between mb-5 text-neutral">
+      <p>
+        © <span class="font-semibold">2020 - 2023 Fazztrack.</span> All Rights
+        Reserved
+      </p>
+      <div class="flex gap-3">
+        <span class="flex gap-2 items-center"><Phone /> +6281132010888</span>
+        <span class="flex gap-2 items-center"><Mail /> hello@fazztrack</span>
+      </div>
+    </div>
+  </div>
+</template>
