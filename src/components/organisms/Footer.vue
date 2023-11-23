@@ -14,10 +14,7 @@ import youtube from "@/assets/youtube.svg";
 import Phone from "@/components/icons/IconPhone.vue";
 import Mail from "@/components/icons/IconMail.vue";
 import { useRoute } from "vue-router";
-
 const {path} = useRoute()
-
-console.log(path)
 </script>
 
 <template>
