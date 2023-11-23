@@ -59,6 +59,11 @@ const router = createRouter({
       name: "Minicamp",
       component: () => import("../views/MinicampView.vue"),
     },
+    {
+      path: "/profile",
+      name: "Profile",
+      component: () => import("../views/ProfileView.vue"),
+    },
   ],
 });
 

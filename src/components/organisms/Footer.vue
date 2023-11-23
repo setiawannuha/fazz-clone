@@ -13,11 +13,13 @@ import facebook from "@/assets/facebook.svg";
 import youtube from "@/assets/youtube.svg";
 import Phone from "@/components/icons/IconPhone.vue";
 import Mail from "@/components/icons/IconMail.vue";
+import { useRoute } from "vue-router";
+const {path} = useRoute()
 </script>
 
 <template>
   <div class="px-5 lg:px-20">
-    <div class="grid grid-cols-6 gap-5">
+    <div v-if="path !== '/profile'" class="grid grid-cols-6 gap-5">
       <div class="col-span-6 lg:col-span-2">
         <img :src="logo" alt="fazztrack logo" class="w-36 mb-5" />
         <p class="text-neutral">
@@ -26,7 +28,6 @@ import Mail from "@/components/icons/IconMail.vue";
           perusahaan ternama.
         </p>
       </div>
-
       <div class="col-span-3 lg:col-span-1">
         <h4 class="text-xl font-semibold mb-6">Kelas</h4>
         <div class="flex flex-col gap-5 text-neutral">

@@ -1,12 +1,21 @@
 <script lang="ts" setup>
 import Footer from '@/components/organisms/Footer.vue';
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import {getMinicamp} from '@/store/get/minicamp'
+import {state} from "@/store/minicamp/minicamp.store"
 
     const categories = ["Disalurkan", "Engineering", "Design", "Product", "Marketing"];
     const { category } = useRoute().query;
     const filter = ref(category);
     const router = useRouter()
+
+    onMounted(() => getMinicamp())
+
+    if(state){
+        console.log('ada')
+        console.log(state)
+    }
 
     const handleCategory = (item: string) => {
     router.push({
@@ -19,19 +28,19 @@ import { useRoute, useRouter } from 'vue-router';
     };
 </script>
 <template>
-    <div>
-        <nav class="bg-white text-center py-3 flex justify-center">
-            <div class="w-full max-w-[1080px] flex flex-col justify-center items-start gap-11    py-12">
-                <div class="text-4xl text-black font-bold">Part-time bootcamp bersama expert terkemuka</div>
+    <div class="w-full">
+        <div class="w-full py-3 flex flex-col justify-center items-center">
+            <div class="w-full px-5 lg:px-0 max-w-[1080px] flex flex-col justify-center items-start gap-11 py-12">
+                <div class="w-full text-4xl text-black font-bold">Part-time bootcamp bersama expert terkemuka</div>
                 <div class="w-full flex justify-between items-center text-xl font-bold text-slate-600">
                     <div>Top Trainer dari Perusahaan</div>
                     <div>Proyek Level Industri</div>
                     <div>Live Class</div>
                 </div>
             </div>
-        </nav>
+        </div>
         <nav class="sticky top-16 z-10 bg-white px-5 lg:px-20 py-3 flex justify-center">
-            <div class="w-full max-w-[1080px] flex justify-start items-center gap-7 py-5 font-bold text-slate-500">
+            <div class="w-full overflow-scroll max-w-[1080px] flex justify-start items-center gap-7 py-5 font-bold text-slate-500">
                 <RouterLink :to="`/minicamp`">
                     <span
                     :class="`${
@@ -61,97 +70,35 @@ import { useRoute, useRouter } from 'vue-router';
         <section class="w-full flex flex-col justify-center items-center gap-11 py-7 mb-24">
             <div class="w-full max-w-[1080px] text-black flex flex-col gap-3">
                 <div class="w-full">
-                    <div class="w-[1080px] flex justify-between items-center gap-5">
-                        <div class="card w-96 bg-base-100 shadow-xl">
+                    <div class="px-5 md:px-0 max-w-[1080px] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center gap-4">
+                        <div v-for="(item, index) in state" :key="index" class="card bg-base-100 shadow-xl w-full">
                             <figure>
                                 <img
-                                src="https://minibootcamp.s3.ap-southeast-1.amazonaws.com/banner/file-1693204506289"
+                                :src="item?.trainerPicture"
                                 alt="Shoes"
                                 />
                             </figure>
                             <div class="card-body">
                                 <h2 class="card-title">
-                                    Kelas Persiapan Bootcamp Fullstack Web
+                                    {{ item?.title }}
                                 </h2>
                                 <p class="text-base text-slate-500">
-                                    21 Oktober 2023 - 29 November 2023
+                                    {{ item?.startDate }} - {{ item?.endDate }}
                                 </p>
                                 <p class="text-base text-slate-500">
-                                    Femilia Putri Mayranti
+                                    {{ item?.trainerName }}
                                 </p>
                                 <div class="py-2">
-                                    Pelajari Fullstack Website selama 5 Minggu dibimbing trainer berpengalaman 2+ tahun
+                                    {{ item?.description.length <= 50 ? item?.description : item?.description.slice(1,50) + ' ...' }}
                                 </div>
                                 <hr />
                                 <div class="w-full flex justify-between items-center py-3">
                                     <p>Harga :</p>
-                                    <p class="text-end text-black font-bold">Rp. 500.000</p>
+                                    <p class="text-end text-black font-bold">Rp. {{ item?.price }}</p>
                                 </div>
                                 <hr />
                                 <div class="w-full flex justify-center items-center text-primary font-bold text-lg pt-3">
-                                    <div>Daftar Waitlist</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card w-96 bg-base-100 shadow-xl">
-                            <figure>
-                                <img
-                                src="https://minibootcamp.s3.ap-southeast-1.amazonaws.com/banner/file-1693204506289"
-                                alt="Shoes"
-                                />
-                            </figure>
-                            <div class="card-body">
-                                <h2 class="card-title">
-                                    Kelas Persiapan Bootcamp Fullstack Web
-                                </h2>
-                                <p class="text-base text-slate-500">
-                                    21 Oktober 2023 - 29 November 2023
-                                </p>
-                                <p class="text-base text-slate-500">
-                                    Femilia Putri Mayranti
-                                </p>
-                                <div class="py-2">
-                                    Pelajari Fullstack Website selama 5 Minggu dibimbing trainer berpengalaman 2+ tahun
-                                </div>
-                                <hr />
-                                <div class="w-full flex justify-between items-center py-3">
-                                    <p>Harga :</p>
-                                    <p class="text-end text-black font-bold">Rp. 500.000</p>
-                                </div>
-                                <hr />
-                                <div class="w-full flex justify-center items-center text-primary font-bold text-lg pt-3">
-                                    <div>Daftar Waitlist</div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card w-96 bg-base-100 shadow-xl">
-                            <figure>
-                                <img
-                                src="https://minibootcamp.s3.ap-southeast-1.amazonaws.com/banner/file-1693204506289"
-                                alt="Shoes"
-                                />
-                            </figure>
-                            <div class="card-body">
-                                <h2 class="card-title">
-                                    Kelas Persiapan Bootcamp Fullstack Web
-                                </h2>
-                                <p class="text-base text-slate-500">
-                                    21 Oktober 2023 - 29 November 2023
-                                </p>
-                                <p class="text-base text-slate-500">
-                                    Femilia Putri Mayranti
-                                </p>
-                                <div class="py-2">
-                                    Pelajari Fullstack Website selama 5 Minggu dibimbing trainer berpengalaman 2+ tahun
-                                </div>
-                                <hr />
-                                <div class="w-full flex justify-between items-center py-3">
-                                    <p>Harga :</p>
-                                    <p class="text-end text-black font-bold">Rp. 500.000</p>
-                                </div>
-                                <hr />
-                                <div class="w-full flex justify-center items-center text-primary font-bold text-lg pt-3">
-                                    <div>Daftar Waitlist</div>
+                                    <div>{{ item?.isWork ? 'Daftar Sekarang' : 'Daftar Waitlist' }}</div>
                                 </div>
                             </div>
                         </div>
