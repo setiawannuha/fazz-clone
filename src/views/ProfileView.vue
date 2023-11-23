@@ -1,5 +1,17 @@
 <script lang="ts" setup>
 import Footer from '@/components/organisms/Footer.vue';
+import { state } from "@/store/user/user.store";
+import { onMounted } from 'vue';
+import { useRouter } from 'vue-router';
+
+const loggedIn = state.data.token
+const router =  useRouter()
+
+onMounted(() => {
+    if(!loggedIn){
+        router.push('/')
+    }
+})
 </script>
 
 <template>
@@ -11,8 +23,11 @@ import Footer from '@/components/organisms/Footer.vue';
                         <div class="w-36 rounded-full overflow-hidden">
                             <img src="https://i.pravatar.cc/300" alt="" class="object-cover">
                         </div>
-                        <div class="text-center w-full text-black text-xl font-semibold px-5">
-                            Gunadi Pratama Sulistiawan
+                        <div v-if="loggedIn" class="text-center w-full text-black text-xl font-semibold px-5 capitalize">
+                            {{ state.data.email.split('@')[0] }}
+                        </div>
+                        <div v-else class="text-center w-full text-black text-xl font-semibold px-5 capitalize">
+                            User
                         </div>
                         <div class="w-full text-center bg-yellow-200 py-5 text-xl text-black">
                             Student ID <span class="font-semibold">FAZFW127</span>
@@ -24,7 +39,8 @@ import Footer from '@/components/organisms/Footer.vue';
                     <div class="w-full border p-5">
                         I am a Full Stack Developer who has a passion for the IT field. I have experience in PHP and JavaScript to develop web and mobile applications, especially for the Android Platform. I have several programming skills, such as Codeigniter, Laravel, React Native, React.js, and Node.js. I am a fast learner, adaptable, and collaborative in a team
                         <br />
-                        <p class="pt-2">gndsuwan@gmail.com</p>
+                        <p v-if="loggedIn" class="pt-2">{{ state.data.email }}</p>
+                        <p v-else class="pt-2">user@gmail.com</p>
                     </div>
                 </div>
                 <div class="w-full flex flex-col gap-9">
