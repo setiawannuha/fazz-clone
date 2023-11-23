@@ -9,7 +9,4 @@
   <main class="min-h-screen pt-16 bg-white">
     <RouterView />
   </main>
-  <footer>
-    <Footer/>
-  </footer>
 </template>
