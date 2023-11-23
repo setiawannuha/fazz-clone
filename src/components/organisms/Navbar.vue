@@ -8,6 +8,9 @@ export default {
 <script lang="ts" setup>
 import { RouterLink } from "vue-router";
 import logo from "@/assets/logo.png";
+import { state } from "@/store/user/user.store";
+
+console.log(state.data.email)
 </script>
 <template>
   <div class="px-3 shadow md:px-10 lg:px-20 navbar bg-white">
@@ -127,13 +130,28 @@ import logo from "@/assets/logo.png";
         </li>
       </ul>
     </div>
-    <div class="space-x-2 md:space-x-3 navbar-end">
+    <div v-if="!state.data.email" class="space-x-2 md:space-x-3 navbar-end">
       <RouterLink to="/login" class="btn btn-md btn-primary btn-outline"
         >Masuk</RouterLink
       >
       <RouterLink to="/register" class="btn btn-md btn-primary"
         >Daftar</RouterLink
       >
+    </div>
+    <div v-if="state.data.email" class="space-x-2 md:space-x-3 navbar-end">
+      <RouterLink to="/profile" class="flex justify-start items-center gap-3">
+        <div>
+          <img src="https://i.pravatar.cc/50" alt="">
+        </div>
+        <div>
+          <div class="capitalize font-semibold tracking-wider text-base">
+            {{ state.data.email.split('@')[0] }}
+          </div>
+          <div class="text-xs">
+            {{ state.data.email }}
+          </div>
+        </div>
+      </RouterLink>
     </div>
   </div>
 </template>
