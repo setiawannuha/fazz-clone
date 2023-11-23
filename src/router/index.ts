@@ -1,5 +1,26 @@
-import { createRouter, createWebHistory } from "vue-router";
+import {
+  createRouter,
+  createWebHistory,
+  type NavigationGuardNext,
+  type RouteLocationNormalized,
+} from "vue-router";
 import HomeView from "../views/HomeView.vue";
+import { useRouter } from "vue-router";
+
+const authGuard = (
+  to: RouteLocationNormalized,
+  from: RouteLocationNormalized,
+  next: NavigationGuardNext
+) => {
+  const router = useRouter();
+  const token = localStorage.getItem("token");
+
+  if (token) {
+    next();
+  } else {
+    router.push("/login");
+  }
+};
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -31,6 +52,7 @@ const router = createRouter({
       path: "/online-course",
       name: "online course",
       component: () => import("../views/OnlineCourseView.vue"),
+      beforeEnter: authGuard,
     },
   ],
 });

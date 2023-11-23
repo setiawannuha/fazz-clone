@@ -34,7 +34,7 @@ export const loginAction = async (
     );
 
     window.alert("Login Success");
-    console.log(data);
+    localStorage.setItem("token", data.data.token);
 
     actions.loginFulfiled({
       data: { email: data.data.user.email, token: data.data.token },

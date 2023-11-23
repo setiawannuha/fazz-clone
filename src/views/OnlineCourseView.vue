@@ -110,7 +110,8 @@ const handleCategory = (item: string) => {
         </div>
       </div>
     </div>
-    <div class="bg-white px-5 lg:px-20 py-10">
+
+    <div class="bg-white px-5 lg:px-20 py-10 mb-32">
       <h3 class="text-2xl mb-5 font-semibold">Semua Online Course</h3>
       <div class="grid grid-cols-3 gap-5">
         <select

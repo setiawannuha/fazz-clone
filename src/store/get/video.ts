@@ -7,7 +7,7 @@ export const getVideo = async () => {
     "https://fazz-track-sample-api.vercel.app/video",
     {
       headers: {
-        Authorization: state.data.token,
+        Authorization: localStorage.getItem("token"),
       },
     }
   );
