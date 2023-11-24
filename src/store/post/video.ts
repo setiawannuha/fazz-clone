@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useRouter } from "vue-router";
-import { actions } from "../user/user.store";
 
 interface IAuth {
   title: string;
@@ -10,8 +9,6 @@ interface IAuth {
   price: number;
   cover: string;
 }
-
-const router = useRouter();
 
 export const createCourse = async (
   { title, description, rating, level, price, cover }: IAuth,
