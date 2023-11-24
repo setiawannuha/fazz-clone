@@ -61,35 +61,37 @@ const handleSubmit = () => {
           placeholder="Masukkan nama lengkap..."
           label="Nama Lengkap"
           default-value=""
-          @passing-value="(value) => (formRegister.fullname = value)"
+          @passing-value="(value) => (formRegister.fullname = String(value))"
         />
         <Input
           type="text"
           placeholder="Masukkan nama e-mail..."
           label="Email"
           default-value=""
-          @passing-value="(value) => (formRegister.email = value)"
+          @passing-value="(value) => (formRegister.email = String(value))"
         />
         <Input
           type="text"
           placeholder="Masukkan no. handphone..."
           label="No. Handphone"
           default-value=""
-          @passing-value="(value) => (formRegister.handphone = value)"
+          @passing-value="(value) => (formRegister.handphone = String(value))"
         />
         <Input
           type="password"
           placeholder="Masukkan kata sandi..."
           label="Kata Sandi"
           default-value=""
-          @passing-value="(value) => (formRegister.password = value)"
+          @passing-value="(value) => (formRegister.password = String(value))"
         />
         <Input
           type="password"
           placeholder="Masukkan ulang kata sandi..."
           label="Konfirmasi Kata Sandi"
           default-value=""
-          @passing-value="(value) => (formRegister.repeatPassword = value)"
+          @passing-value="
+            (value) => (formRegister.repeatPassword = String(value))
+          "
         />
         <div class="flex items-center gap-2 mt-2">
           <input type="checkbox" class="mr-2" v-model="formRegister.term" />

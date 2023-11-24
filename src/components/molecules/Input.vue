@@ -3,11 +3,11 @@ interface IProps {
   type: string;
   placeholder: string;
   label: string;
-  defaultValue: string;
+  defaultValue: string | number;
 }
 
 interface IEmit {
-  (e: "passing-value", value: string): void;
+  (e: "passing-value", value: string | number): void;
 }
 </script>
 

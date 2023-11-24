@@ -55,15 +55,21 @@ const router = createRouter({
       beforeEnter: authGuard,
     },
     {
-      path: "/minicamp",
-      name: "Minicamp",
-      component: () => import("../views/MinicampView.vue"),
+      path: "/video-form",
+      name: "video form",
+      component: () => import("../views/VideoFormView.vue"),
+      beforeEnter: authGuard,
     },
-    {
-      path: "/profile",
-      name: "Profile",
-      component: () => import("../views/ProfileView.vue"),
-    },
+    // {
+    //   path: "/minicamp",
+    //   name: "Minicamp",
+    //   component: () => import("../views/MinicampView.vue"),
+    // },
+    // {
+    //   path: "/profile",
+    //   name: "Profile",
+    //   component: () => import("../views/ProfileView.vue"),
+    // },
   ],
 });
 

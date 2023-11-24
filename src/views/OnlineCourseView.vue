@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { useRoute } from "vue-router";
-import { onMounted, ref } from "vue";
+import { onMounted, ref, watch } from "vue";
 import router from "@/router";
 import bookmark from "@/assets/bookmark.svg";
 import IconRating from "@/components/icons/IconRating.vue";
-import { getVideo } from "@/store/get/video";
+import { getDetailVideo, getVideo } from "@/store/get/video";
 import { state } from "@/store/video/video.store";
 import FooterVue from "@/components/organisms/Footer.vue";
+import { deleteCourse } from "@/store/delete/video";
 
 const categories = ["Engineering", "Design", "Product", "Marketing"];
 const { category } = useRoute().query;
@@ -22,6 +23,16 @@ const handleCategory = (item: string) => {
     },
   });
   filter.value = item.toLocaleLowerCase();
+};
+
+const handleEdit = async (id: number) => {
+  await getDetailVideo(id);
+  router.push({
+    name: "video form",
+    query: {
+      id: id,
+    },
+  });
 };
 </script>
 
@@ -112,7 +123,16 @@ const handleCategory = (item: string) => {
     </div>
 
     <div class="bg-white px-5 lg:px-20 py-10 mb-32">
-      <h3 class="text-2xl mb-5 font-semibold">Semua Online Course</h3>
+      <div class="flex justify-between items-center mb-5">
+        <h3 class="text-2xl mb-5 font-semibold">Semua Online Course</h3>
+        <RouterLink to="/video-form"
+          ><button
+            class="btn btn-md bg-[#f16d1b] text-white hover:bg-[#f16d1bb4]"
+          >
+            Buat Course
+          </button></RouterLink
+        >
+      </div>
       <div class="grid grid-cols-3 gap-5">
         <select
           name="category"
@@ -135,7 +155,7 @@ const handleCategory = (item: string) => {
 
       <div class="grid grid-cols-4 mt-7 gap-3">
         <div
-          v-for="(item, index) in state"
+          v-for="(item, index) in state.list"
           :key="index"
           class="col-span-2 lg:col-span-1 border-2 rounded-lg"
         >
@@ -154,11 +174,19 @@ const handleCategory = (item: string) => {
               </div>
               <hr class="my-3" />
               <div class="flex justify-between">
-                <span class="text-neutral">Harga :</span>
+                <span class="text-neutral">Harga : </span>
                 <span class="text-md font-bold text-[#f16d1b]">{{
                   item.price
                 }}</span>
               </div>
+            </div>
+            <div class="flex gap-3 mt-5">
+              <button @click="handleEdit(item.id)" class="btn btn-sm">
+                Edit
+              </button>
+              <button @click="deleteCourse(item.id)" class="btn btn-sm">
+                delete
+              </button>
             </div>
           </div>
         </div>

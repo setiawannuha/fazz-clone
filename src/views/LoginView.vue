@@ -53,14 +53,14 @@ const handleSubmit = () => {
           placeholder="Masukkan nama e-mail..."
           label="Email"
           default-value=""
-          @passing-value="(value) => (formRegister.email = value)"
+          @passing-value="(value) => (formRegister.email = String(value))"
         />
         <Input
           type="password"
           placeholder="Masukkan kata sandi..."
           label="Kata Sandi"
           default-value=""
-          @passing-value="(value) => (formRegister.password = value)"
+          @passing-value="(value) => (formRegister.password = String(value))"
         />
         <div class="flex items-center justify-between mt-2">
           <div class="flex items-center gap-1">

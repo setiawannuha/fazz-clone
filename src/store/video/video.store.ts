@@ -1,6 +1,6 @@
-import { reactive, ref } from "vue";
+import { reactive } from "vue";
 
-interface IState {
+interface Video {
   id: number;
   created_at: string;
   title: string;
@@ -11,10 +11,30 @@ interface IState {
   cover: string;
 }
 
-export const state = ref<IState[]>([]);
+interface IState {
+  list: Video[];
+  detail: Video;
+}
+
+export const state = reactive<IState>({
+  list: [],
+  detail: {
+    id: 0,
+    created_at: "",
+    title: "",
+    description: "",
+    cover: "",
+    rating: 0,
+    level: "",
+    price: 0,
+  },
+});
 
 export const actions = {
-  getVideoSuccess: (data: IState[]) => {
-    state.value = data;
+  getVideoSuccess: (data: Video[]) => {
+    state.list = data;
+  },
+  getDetailVideoSuccess: (data: Video) => {
+    state.detail = data;
   },
 };
