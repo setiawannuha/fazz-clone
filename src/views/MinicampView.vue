@@ -4,6 +4,10 @@ import { onMounted, ref } from 'vue';
 import { useRoute, useRouter, RouterLink } from 'vue-router';
 import {getMinicamp} from '@/store/get/minicamp'
 import {state} from "@/store/minicamp/minicamp.store"
+import axios from 'axios';
+import { state as stateUser } from "@/store/user/user.store";
+
+const token = stateUser.data.token
 
     const categories = ["Disalurkan", "Engineering", "Design", "Product", "Marketing"];
     const { category } = useRoute().query;
@@ -12,10 +16,6 @@ import {state} from "@/store/minicamp/minicamp.store"
 
     onMounted(() => getMinicamp())
 
-    if(state){
-        console.log('ada')
-        console.log(state)
-    }
 
     const handleCategory = (item: string) => {
     router.push({
@@ -26,6 +26,21 @@ import {state} from "@/store/minicamp/minicamp.store"
     });
     filter.value = item.toLocaleLowerCase();
     };
+
+    const handleDelete = async(id) => {
+        try {
+            const {data} = await axios.delete("https://fazz-track-sample-api.vercel.app/minicamp/"+id,
+                {
+                headers: {
+                    Authorization: token
+                },
+                })
+            console.log(data)
+            getMinicamp()
+        } catch (error) {
+            console.log(error)
+        }
+    }
 </script>
 <template>
     <div class="w-full">
@@ -71,7 +86,10 @@ import {state} from "@/store/minicamp/minicamp.store"
             <div class="w-full max-w-[1080px] text-black flex flex-col gap-3">
                 <div class="w-full">
                     <div class="px-5 md:px-0 max-w-[1080px] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center gap-4">
-                        <div v-for="(item, index) in state" :key="index" class="card bg-base-100 shadow-xl w-full">
+                        <div v-for="(item, index) in state" :key="index" class="card bg-base-100 shadow-xl w-full relative">
+                            <div class="absolute top-1 right-1">
+                                <button @click="handleDelete(item?.id)" class="bg-red-500 p-1 rounded text-sm font-semibold">Delete</button>
+                            </div>
                             <figure>
                                 <img
                                 :src="item?.trainerPicture"
