@@ -1,5 +1,4 @@
 import axios from "axios";
-import { state } from "../user/user.store";
 import { actions } from "../minicamp/minicamp.store";
 
 export const getMinicamp = async () => {
@@ -7,7 +6,7 @@ export const getMinicamp = async () => {
     "https://fazz-track-sample-api.vercel.app/minicamp",
     {
       headers: {
-        Authorization: state.data.token,
+        Authorization: localStorage.getItem("token"),
       },
     }
   );

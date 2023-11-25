@@ -1,15 +1,17 @@
 <script lang="ts" setup>
 import Footer from '@/components/organisms/Footer.vue';
-import { state } from "@/store/user/user.store";
+import { getProfile } from '@/store/get/user';
+import { state } from "@/store/user/profile.store";
 import { onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-
 const router =  useRouter()
+const token = localStorage.getItem("token")
 
 onMounted(() => {
-  if(!state.data.token){
+  if(!token){
     router.push('/')
   }
+  getProfile()
 })
 </script>
 
@@ -22,7 +24,7 @@ onMounted(() => {
                         <div class="w-36 rounded-full overflow-hidden">
                             <img src="https://i.pravatar.cc/300" alt="" class="object-cover">
                         </div>
-                        <div v-if="state.data.token" class="text-center w-full text-black text-xl font-semibold px-5 capitalize">
+                        <div v-if="token" class="text-center w-full text-black text-xl font-semibold px-5 capitalize">
                             {{ state.data.email.split('@')[0] }}
                         </div>
                         <div v-else class="text-center w-full text-black text-xl font-semibold px-5 capitalize">
@@ -38,7 +40,7 @@ onMounted(() => {
                     <div class="w-full border p-5">
                         I am a Full Stack Developer who has a passion for the IT field. I have experience in PHP and JavaScript to develop web and mobile applications, especially for the Android Platform. I have several programming skills, such as Codeigniter, Laravel, React Native, React.js, and Node.js. I am a fast learner, adaptable, and collaborative in a team
                         <br />
-                        <p v-if="state.data.token" class="pt-2">{{ state.data.email }}</p>
+                        <p v-if="token" class="pt-2">{{ state.data.email }}</p>
                         <p v-else class="pt-2">user@gmail.com</p>
                     </div>
                 </div>

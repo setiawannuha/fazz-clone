@@ -5,9 +5,8 @@ import { useRoute, useRouter, RouterLink } from 'vue-router';
 import {getMinicamp} from '@/store/get/minicamp'
 import {state} from "@/store/minicamp/minicamp.store"
 import axios from 'axios';
-import { state as stateUser } from "@/store/user/user.store";
 
-const token = stateUser.data.token
+const token = localStorage.getItem("token")
 
     const categories = ["Disalurkan", "Engineering", "Design", "Product", "Marketing"];
     const { category } = useRoute().query;
@@ -27,7 +26,7 @@ const token = stateUser.data.token
     filter.value = item.toLocaleLowerCase();
     };
 
-    const handleDelete = async(id) => {
+    const handleDelete = async(id: number) => {
         try {
             const {data} = await axios.delete("https://fazz-track-sample-api.vercel.app/minicamp/"+id,
                 {

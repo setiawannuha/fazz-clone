@@ -4,9 +4,9 @@ import axios from 'axios';
 import { onMounted } from 'vue';
 import { useRoute } from 'vue-router';
 import {state, actions} from '@/store/minicamp/detailminicamp.store'
-import { state as stateUser } from "@/store/user/user.store";
+
     const id = useRoute().params.id
-    const token = stateUser.data.token
+    const token = localStorage.getItem("token")
 
     onMounted(async() => {
         try {

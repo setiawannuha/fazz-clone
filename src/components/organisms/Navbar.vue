@@ -8,9 +8,11 @@ export default {
 <script lang="ts" setup>
 import { RouterLink } from "vue-router";
 import logo from "@/assets/logo.png";
-import { state } from "@/store/user/user.store";
-
-
+import { state } from "@/store/user/profile.store";
+import { onMounted } from "vue";
+import { getProfile } from "@/store/get/user";
+const token = localStorage.getItem("token")
+onMounted(() => getProfile());
 </script>
 <template>
   <div class="px-3 shadow md:px-10 lg:px-20 navbar bg-white">
@@ -37,7 +39,7 @@ import { state } from "@/store/user/user.store";
           class="menu font-semibold dropdown-content mt-2 z-[1] p-2 shadow border bg-white rounded-lg w-screen -ml-3"
         >
         <li>
-          <div v-if="state.data.token" class="">
+          <div v-if="token" class="">
             <RouterLink to="/profile" class="flex justify-start items-center gap-3">
               <div class="rounded-full overflow-hidden border-2 border-primary w-12 h-12">
                 <img src="https://i.pravatar.cc/50" alt="" class="object-cover">
@@ -147,7 +149,7 @@ import { state } from "@/store/user/user.store";
         </li>
       </ul>
     </div>
-    <div v-if="!state.data.token" class="space-x-2 md:space-x-3 navbar-end">
+    <div v-if="!token" class="space-x-2 md:space-x-3 navbar-end">
       <RouterLink to="/login" class="btn btn-md btn-primary btn-outline"
         >Masuk</RouterLink
       >
@@ -155,7 +157,7 @@ import { state } from "@/store/user/user.store";
         >Daftar</RouterLink
       >
     </div>
-    <div v-if="state.data.token" class="hidden md:flex space-x-2 md:space-x-3 navbar-end">
+    <div v-if="token" class="hidden md:flex space-x-2 md:space-x-3 navbar-end">
       <RouterLink to="/profile" class="flex justify-start items-center gap-3">
         <div class="rounded-full overflow-hidden border-2 border-primary w-12 h-12">
           <img src="https://i.pravatar.cc/50" alt="" class="object-cover">
