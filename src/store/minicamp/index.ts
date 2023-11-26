@@ -38,7 +38,7 @@ export const useMinicampStore = defineStore('minicamp', {
         this.list.isLoading = false
       }
     },
-    
+
     async getDetail(minicampId: string) {
       try {
         this.detail.isLoading = true
@@ -54,6 +54,13 @@ export const useMinicampStore = defineStore('minicamp', {
       } finally {
         this.detail.isLoading = false
       }
+    },
+    async create(payload: IMinicamp){
+      return await axios.post("https://fazz-track-sample-api.vercel.app/minicamp", payload, {
+        headers: {
+          Authorization: token
+        },
+      })
     }
   }
 })

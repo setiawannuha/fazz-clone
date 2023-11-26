@@ -80,6 +80,11 @@ const router = createRouter({
       name: "ManageMinicamp",
       component: () => import("../views/MinicampForm.vue"),
     },
+    {
+      path: "/create-minicamp",
+      name: "CreateMinicamp",
+      component: () => import("../views/minicamp/MinicampCreateView.vue"),
+    },
   ],
 });
 

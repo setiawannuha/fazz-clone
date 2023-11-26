@@ -99,7 +99,7 @@ const handleDetail = (id: string) => {
                 </RouterLink>
             </div>
             <div class="w-full md:w-36">
-              <RouterLink to="/manage-minicamp" class="w-full btn btn-primary text-white">Buat Minicamp</RouterLink>
+              <RouterLink to="/create-minicamp" class="w-full btn btn-primary text-white">Buat Minicamp</RouterLink>
             </div>
           </div>
         </nav>
