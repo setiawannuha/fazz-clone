@@ -67,7 +67,7 @@ const router = createRouter({
     },
     {
       path: "/minicamp/detail/:id",
-      name: "Minicamp Detail",
+      name: "MinicampDetail",
       component: () => import("../views/minicamp/MinicampDetailView.vue"),
     },
     {

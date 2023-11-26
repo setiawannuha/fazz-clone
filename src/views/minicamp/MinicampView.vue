@@ -36,8 +36,6 @@ const token = localStorage.getItem("token")
                 },
                 })
             console.log(data)
-            // getMinicamp()
-            // minicampStore.getAll()
         } catch (error) {
             console.log(error)
         }
@@ -52,6 +50,13 @@ const token = localStorage.getItem("token")
     },
   });
 };
+
+const handleDetail = (id: string) => {
+  router.push({
+    name: "MinicampDetail",
+    params: {id}
+  })
+}
 </script>
 <template>
     <div class="w-full">
@@ -120,9 +125,9 @@ const token = localStorage.getItem("token")
                                 />
                             </figure>
                             <div class="card-body">
-                                <RouterLink :to="`/minicamp/detail/${item?.id}`" class="card-title">
+                                <button @click="handleDetail(`${item?.id}`)" class="card-title">
                                     {{ item?.title }}
-                                </RouterLink>
+                                </button>
                                 <p class="text-base text-slate-500">
                                     {{ item?.startDate }} - {{ item?.endDate }}
                                 </p>

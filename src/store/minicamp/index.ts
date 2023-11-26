@@ -31,7 +31,6 @@ export const useMinicampStore = defineStore('minicamp', {
             Authorization: token
           },
         })
-
         this.list.data = data.data
       } catch (error) {
         this.list.isError = true
@@ -39,16 +38,17 @@ export const useMinicampStore = defineStore('minicamp', {
         this.list.isLoading = false
       }
     },
+    
     async getDetail(minicampId: string) {
       try {
         this.detail.isLoading = true
-        const response = await axios.get("https://fazz-track-sample-api.vercel.app/minicamp/" + minicampId, 
+        const { data } = await axios.get("https://fazz-track-sample-api.vercel.app/minicamp/" + minicampId, 
         {
           headers: {
             Authorization: token
           },
         })
-        this.detail.data = response.data
+        this.detail.data = data.data
       } catch (error) {
         this.detail.isError = true
       } finally {
