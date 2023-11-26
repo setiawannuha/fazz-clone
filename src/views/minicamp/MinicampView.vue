@@ -40,16 +40,15 @@
   }
 
   const handleEdit = async (id: string) => {
-  // await getDetailMinicamp(id);
+  await minicampStore.getDetail(id)
   router.push({
-    name: "ManageMinicamp",
-    query: {
-      id: id,
-    },
+    name: "EditMinicamp",
+    params: {id}
   });
 };
 
-const handleDetail = (id: string) => {
+const handleDetail = async (id: string) => {
+  await minicampStore.getDetail(id)
   router.push({
     name: "MinicampDetail",
     params: {id}
@@ -57,10 +56,10 @@ const handleDetail = (id: string) => {
 }
 </script>
 <template>
-  <div v-if="isLoading" class="absolute w-full h-full flex justify-center items-center bg-slate-100/20">
+  <div v-if="isLoading" class="absolute z-20 w-full h-full flex justify-center items-center bg-slate-300/50 text-2xl font-bold">
     Please Wait ...
   </div>
-    <div class="w-full">
+    <div v-if="!isLoading" class="w-full">
         <div class="w-full py-3 flex flex-col justify-center items-center">
             <div class="w-full px-5 lg:px-0 max-w-[1080px] flex flex-col justify-center items-start gap-11 py-12">
                 <div class="w-full text-4xl text-black font-bold">Part-time bootcamp bersama expert terkemuka</div>

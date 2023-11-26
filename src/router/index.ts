@@ -85,6 +85,11 @@ const router = createRouter({
       name: "CreateMinicamp",
       component: () => import("../views/minicamp/MinicampCreateView.vue"),
     },
+    {
+      path: "/edit-minicamp/:id",
+      name: "EditMinicamp",
+      component: () => import("../views/minicamp/MinicampEditView.vue"),
+    },
   ],
 });
 
