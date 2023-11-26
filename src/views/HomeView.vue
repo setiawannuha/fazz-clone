@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import Footer from "@/components/organisms/Footer.vue";
-import { state } from "@/store/user/user.store";
 </script>
 
 <template>
