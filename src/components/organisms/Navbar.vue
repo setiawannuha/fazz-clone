@@ -8,11 +8,14 @@ export default {
 <script lang="ts" setup>
 import { RouterLink } from "vue-router";
 import logo from "@/assets/logo.png";
-import { state } from "@/store/user/profile.store";
 import { onMounted } from "vue";
-import { getProfile } from "@/store/get/user";
+import { useProfileStore } from "@/store/profile";
+
+
+const profileStore = useProfileStore()
 const token = localStorage.getItem("token")
-onMounted(() => getProfile());
+onMounted(() => profileStore.getMyProfile());
+
 </script>
 <template>
   <div class="px-3 shadow md:px-10 lg:px-20 navbar bg-white">
@@ -46,10 +49,10 @@ onMounted(() => getProfile());
               </div>
               <div>
                 <div class="capitalize font-semibold tracking-wider text-base">
-                  {{ state.data.email.split('@')[0] }}
+                  {{ profileStore.detail.data?.email.split('@')[0] }}
                 </div>
                 <div class="text-xs">
-                  {{ state.data.email }}
+                  {{ profileStore.detail.data?.email }}
                 </div>
               </div>
             </RouterLink>
@@ -164,10 +167,10 @@ onMounted(() => getProfile());
         </div>
         <div>
           <div class="capitalize font-semibold tracking-wider text-base">
-            {{ state.data.email.split('@')[0] }}
+            {{ profileStore.detail.data?.email.split('@')[0] }}
           </div>
           <div class="text-xs">
-            {{ state.data.email }}
+            {{ profileStore.detail.data?.email }}
           </div>
         </div>
       </RouterLink>
