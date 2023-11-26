@@ -61,6 +61,13 @@ export const useMinicampStore = defineStore('minicamp', {
           Authorization: token
         },
       })
+    },
+    async delete(minicampId: string){
+      return await axios.delete("https://fazz-track-sample-api.vercel.app/minicamp/" + minicampId, {
+        headers: {
+          Authorization: token
+        },
+      })
     }
   }
 })

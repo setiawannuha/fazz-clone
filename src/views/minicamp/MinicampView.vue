@@ -1,45 +1,43 @@
 <script lang="ts" setup>
-import Footer from '@/components/organisms/Footer.vue';
-import { onMounted, ref } from 'vue';
-import { useRoute, useRouter, RouterLink } from 'vue-router';
-import { useMinicampStore } from '@/store/minicamp';
+  import Footer from '@/components/organisms/Footer.vue';
+  import { onMounted, ref, type Ref } from 'vue';
+  import { useRoute, useRouter, RouterLink } from 'vue-router';
+  import { useMinicampStore } from '@/store/minicamp';
 
-import axios from 'axios';
 
-const token = localStorage.getItem("token")
+  const isLoading: Ref<boolean> = ref(false)
+  const isError: Ref<boolean> = ref(false)
 
-    const categories = ["Disalurkan", "Engineering", "Design", "Product", "Marketing"];
-    const { category } = useRoute().query;
-    const filter = ref(category);
-    const router = useRouter()
-    const minicampStore = useMinicampStore()
-    onMounted(() => {
-      minicampStore.getAll()
-    })
+  const categories = ["Disalurkan", "Engineering", "Design", "Product", "Marketing"];
+  const { category } = useRoute().query;
+  const filter = ref(category);
+  const router = useRouter()
+  const minicampStore = useMinicampStore()
+  onMounted(() => {
+    minicampStore.getAll()
+  })
 
-    const handleCategory = (item: string) => {
-    router.push({
-        name: "online course",
-        params: {
-        category: item.toLocaleLowerCase(),
-        },
-    });
-    filter.value = item.toLocaleLowerCase();
-    };
+  const handleCategory = (item: string) => {
+  router.push({
+      name: "online course",
+      params: {
+      category: item.toLocaleLowerCase(),
+      },
+  });
+  filter.value = item.toLocaleLowerCase();
+  };
 
-    const handleDelete = async(id: number) => {
-        try {
-            const {data} = await axios.delete("https://fazz-track-sample-api.vercel.app/minicamp/"+id,
-                {
-                headers: {
-                    Authorization: token
-                },
-                })
-            console.log(data)
-        } catch (error) {
-            console.log(error)
-        }
-    }
+  const handleDelete = async(id: string) => {
+    try {
+    isLoading.value = true
+    await minicampStore.delete(id)
+  } catch (error) {
+    isError.value = true
+  } finally {
+    isLoading.value = false
+    minicampStore.getAll()
+  }
+  }
 
   const handleEdit = async (id: string) => {
   // await getDetailMinicamp(id);
@@ -59,6 +57,9 @@ const handleDetail = (id: string) => {
 }
 </script>
 <template>
+  <div v-if="isLoading" class="absolute w-full h-full flex justify-center items-center bg-slate-100/20">
+    Please Wait ...
+  </div>
     <div class="w-full">
         <div class="w-full py-3 flex flex-col justify-center items-center">
             <div class="w-full px-5 lg:px-0 max-w-[1080px] flex flex-col justify-center items-start gap-11 py-12">
