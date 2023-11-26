@@ -2,9 +2,8 @@
 import Footer from '@/components/organisms/Footer.vue';
 import { onMounted, ref } from 'vue';
 import { useRoute, useRouter, RouterLink } from 'vue-router';
-import {getMinicamp} from '@/store/get/minicamp'
-import {getDetailMinicamp} from '@/store/get/minicamp'
-import {state} from "@/store/minicamp/minicamp.store"
+import { useMinicampStore } from '@/store/minicamp';
+
 import axios from 'axios';
 
 const token = localStorage.getItem("token")
@@ -13,9 +12,10 @@ const token = localStorage.getItem("token")
     const { category } = useRoute().query;
     const filter = ref(category);
     const router = useRouter()
-
-    onMounted(() => getMinicamp())
-
+    const minicampStore = useMinicampStore()
+    onMounted(() => {
+      minicampStore.getAll()
+    })
 
     const handleCategory = (item: string) => {
     router.push({
@@ -36,14 +36,13 @@ const token = localStorage.getItem("token")
                 },
                 })
             console.log(data)
-            getMinicamp()
         } catch (error) {
             console.log(error)
         }
     }
 
-  const handleEdit = async (id: number) => {
-  await getDetailMinicamp(id);
+  const handleEdit = async (id: string) => {
+  // await getDetailMinicamp(id);
   router.push({
     name: "ManageMinicamp",
     query: {
@@ -51,6 +50,13 @@ const token = localStorage.getItem("token")
     },
   });
 };
+
+const handleDetail = (id: string) => {
+  router.push({
+    name: "MinicampDetail",
+    params: {id}
+  })
+}
 </script>
 <template>
     <div class="w-full">
@@ -93,15 +99,21 @@ const token = localStorage.getItem("token")
                 </RouterLink>
             </div>
             <div class="w-full md:w-36">
-              <RouterLink to="/manage-minicamp" class="w-full btn btn-primary text-white">Buat Minicamp</RouterLink>
+              <RouterLink to="/create-minicamp" class="w-full btn btn-primary text-white">Buat Minicamp</RouterLink>
             </div>
           </div>
         </nav>
         <section class="w-full flex flex-col justify-center items-center gap-11 py-7 mb-24">
             <div class="w-full max-w-[1080px] text-black flex flex-col gap-3">
                 <div class="w-full">
-                    <div class="px-5 md:px-0 max-w-[1080px] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center gap-4">
-                        <div v-for="(item, index) in state" :key="index" class="card bg-base-100 shadow-xl w-full relative">
+                  <div v-if="minicampStore.list.isLoading" class="w-full text-center text-slate-500 font-bold text-2xl">
+                    Please wait ..
+                  </div>
+                  <div v-else-if="minicampStore.list.isError" class="text-slate-500 font-bold text-2xl">
+                    Oppss Error ..
+                  </div>
+                    <div v-else class="px-5 md:px-0 max-w-[1080px] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center gap-4">
+                        <div v-for="(item, index) in minicampStore.list.data" :key="index" class="card bg-base-100 shadow-xl w-full relative">
                             <div class="absolute top-1 right-1 flex gap-2">
                                 <button @click="handleEdit(item?.id)" class="bg-primary p-1 rounded text-sm text-white font-semibold">Edit</button>
                                 <button @click="handleDelete(item?.id)" class="bg-red-500 p-1 rounded text-sm font-semibold">Delete</button>
@@ -113,9 +125,9 @@ const token = localStorage.getItem("token")
                                 />
                             </figure>
                             <div class="card-body">
-                                <RouterLink :to="`/minicamp/${item?.id}`" class="card-title">
+                                <button @click="handleDetail(`${item?.id}`)" class="card-title">
                                     {{ item?.title }}
-                                </RouterLink>
+                                </button>
                                 <p class="text-base text-slate-500">
                                     {{ item?.startDate }} - {{ item?.endDate }}
                                 </p>

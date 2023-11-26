@@ -63,12 +63,12 @@ const router = createRouter({
     {
       path: "/minicamp",
       name: "Minicamp",
-      component: () => import("../views/MinicampView.vue"),
+      component: () => import("../views/minicamp/MinicampView.vue"),
     },
     {
-      path: "/minicamp/:id",
-      name: "Minicamp Detail",
-      component: () => import("../views/MinicampDetailView.vue"),
+      path: "/minicamp/detail/:id",
+      name: "MinicampDetail",
+      component: () => import("../views/minicamp/MinicampDetailView.vue"),
     },
     {
       path: "/profile",
@@ -79,6 +79,11 @@ const router = createRouter({
       path: "/manage-minicamp",
       name: "ManageMinicamp",
       component: () => import("../views/MinicampForm.vue"),
+    },
+    {
+      path: "/create-minicamp",
+      name: "CreateMinicamp",
+      component: () => import("../views/minicamp/MinicampCreateView.vue"),
     },
   ],
 });
