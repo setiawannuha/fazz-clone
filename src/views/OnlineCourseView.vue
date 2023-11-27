@@ -28,8 +28,8 @@ const handleCategory = (item: string) => {
   filter.value = item.toLocaleLowerCase();
 };
 
-const handleEdit = async (id: number) => {
-  await videoStore.getDetail(id);
+const handleEdit = (id: number) => {
+  // await videoStore.getDetail(id);
   router.push({
     name: "video form",
     query: {

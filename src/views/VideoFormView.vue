@@ -12,7 +12,7 @@ interface IForm {
 <script setup lang="ts">
 import logo from "@/assets/logo.png";
 import Input from "@/components/molecules/Input.vue";
-import { reactive } from "vue";
+import { onMounted, reactive } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { useVideoStore } from "@/stores/video/index";
 
@@ -31,6 +31,13 @@ const formVideo = reactive<IForm>({
   rating: id ? videoStore.detail.rating : 0,
   level: id ? videoStore.detail.level : "",
   price: id ? videoStore.detail.price : 0,
+});
+
+onMounted(() => {
+  if (id) {
+    const finalID = id.toLocaleString();
+    videoStore.getDetail(finalID);
+  }
 });
 
 const handleCreate = async () => {
@@ -81,7 +88,11 @@ const handleSubmit = async () => {
         <h3 v-if="id" class="text-xl font-semibold mb-2">Edit Course</h3>
         <h3 v-else="id" class="text-xl font-semibold mb-2">Buat Course</h3>
       </div>
-      <form class="w-full flex flex-col gap-4" @submit.prevent="handleSubmit">
+      <form
+        v-if="!videoStore.isLoading"
+        class="w-full flex flex-col gap-4"
+        @submit.prevent="handleSubmit"
+      >
         <Input
           type="text"
           placeholder="Masukkan judul..."
@@ -129,6 +140,7 @@ const handleSubmit = async () => {
           Submit Course
         </button>
       </form>
+      <div v-else class="min-h-screen">Loading...</div>
     </div>
   </div>
 </template>

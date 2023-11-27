@@ -27,6 +27,8 @@ const handleSubmit = async () => {
     password: formRegister.password,
   });
   localStorage.setItem("token", data.data.token);
+  console.log(data.data);
+  authStore.data.email = data.data.user.email;
   router.push("/");
 };
 </script>

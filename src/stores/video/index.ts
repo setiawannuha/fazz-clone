@@ -16,6 +16,7 @@ export const useVideoStore = defineStore("post", {
         level: "",
         price: 0,
       },
+      isLoading: false,
     };
   },
 
@@ -35,17 +36,24 @@ export const useVideoStore = defineStore("post", {
       this.list = data.data;
     },
 
-    async getDetail(id: number) {
-      const { data } = await axios.get(
-        `https://fazz-track-sample-api.vercel.app/video/${id}`,
-        {
-          headers: {
-            Authorization: localStorage.getItem("token"),
-          },
-        }
-      );
+    async getDetail(id: string) {
+      try {
+        this.isLoading = true;
+        const { data } = await axios.get(
+          `https://fazz-track-sample-api.vercel.app/video/${id}`,
+          {
+            headers: {
+              Authorization: localStorage.getItem("token"),
+            },
+          }
+        );
 
-      this.detail = data.data;
+        this.detail = data.data;
+      } catch (error) {
+        window.alert(error);
+      } finally {
+        this.isLoading = false;
+      }
     },
 
     async createVideo({

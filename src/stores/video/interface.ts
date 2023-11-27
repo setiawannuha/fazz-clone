@@ -12,6 +12,7 @@ export interface Video {
 export interface IState {
   list: Video[];
   detail: Video;
+  isLoading: boolean;
 }
 
 export interface IPayload {

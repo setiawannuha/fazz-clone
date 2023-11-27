@@ -9,10 +9,20 @@ export default {
 import { RouterLink } from "vue-router";
 import logo from "@/assets/logo.png";
 import { useAuthStore } from "@/stores/auth/index";
+import { useRouter, useRoute } from "vue-router";
+import { ref, type Ref } from "vue";
 
 const authStore = useAuthStore();
+const router = useRouter();
+const route = useRoute();
+const { params } = route;
+const token: Ref<null | string> = ref(null);
 
-const token = localStorage.getItem("token");
+const handleLogout = () => {
+  localStorage.removeItem("token");
+  authStore.data.email = "";
+  router.push("/login");
+};
 </script>
 <template>
   <div class="px-3 shadow md:px-10 lg:px-20 navbar bg-white">
@@ -39,7 +49,7 @@ const token = localStorage.getItem("token");
           class="menu font-semibold dropdown-content mt-2 z-[1] p-2 shadow border bg-white rounded-lg w-screen -ml-3"
         >
           <li>
-            <div v-if="token" class="">
+            <div v-if="authStore.data.email" class="">
               <RouterLink
                 to="/profile"
                 class="flex justify-start items-center gap-3"
@@ -160,15 +170,10 @@ const token = localStorage.getItem("token");
         </li>
       </ul>
     </div>
-    <div v-if="!token" class="space-x-2 md:space-x-3 navbar-end">
-      <RouterLink to="/login" class="btn btn-md btn-primary btn-outline"
-        >Masuk</RouterLink
-      >
-      <RouterLink to="/register" class="btn btn-md btn-primary"
-        >Daftar</RouterLink
-      >
-    </div>
-    <div v-if="token" class="hidden md:flex space-x-2 md:space-x-3 navbar-end">
+    <div
+      v-if="authStore.data.email"
+      class="hidden md:flex space-x-2 md:space-x-3 navbar-end"
+    >
       <RouterLink to="/profile" class="flex justify-start items-center gap-3">
         <div
           class="rounded-full overflow-hidden border-2 border-primary w-12 h-12"
@@ -184,6 +189,17 @@ const token = localStorage.getItem("token");
           </div>
         </div>
       </RouterLink>
+      <button class="btn btn-md btn-primary btn-outline" @click="handleLogout">
+        Logout
+      </button>
+    </div>
+    <div v-else class="space-x-2 md:space-x-3 navbar-end">
+      <RouterLink to="/login" class="btn btn-md btn-primary btn-outline"
+        >Masuk</RouterLink
+      >
+      <RouterLink to="/register" class="btn btn-md btn-primary"
+        >Daftar</RouterLink
+      >
     </div>
   </div>
 </template>
