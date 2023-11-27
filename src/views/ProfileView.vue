@@ -8,10 +8,10 @@ const router =  useRouter()
 const token = localStorage.getItem("token")
 const profileStore = useProfileStore()
 onMounted(() => {
-  if(!token){
+    if(!token){
     router.push('/')
-  }
-  profileStore.getMyProfile()
+    }
+    profileStore.getMyProfile()
 })
 </script>
 
@@ -41,7 +41,7 @@ onMounted(() => {
                         I am a Full Stack Developer who has a passion for the IT field. I have experience in PHP and JavaScript to develop web and mobile applications, especially for the Android Platform. I have several programming skills, such as Codeigniter, Laravel, React Native, React.js, and Node.js. I am a fast learner, adaptable, and collaborative in a team
                         <br />
                         <p v-if="token" class="pt-2">{{ profileStore.detail.data?.email }}</p>
-                        <p v-else class="pt-2">user@gmail.com</p>
+.                       <p v-if="!token" class="pt-2">user@gmail.com</p>
                     </div>
                 </div>
                 <div class="w-full flex flex-col gap-9 px-5 md:px-16 lg:px-0 ">

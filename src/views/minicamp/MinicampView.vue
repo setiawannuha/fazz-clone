@@ -40,7 +40,7 @@
   }
 
   const handleEdit = async (id: string) => {
-  await minicampStore.getDetail(id)
+  // await minicampStore.getDetail(id)
   router.push({
     name: "EditMinicamp",
     params: {id}
@@ -48,7 +48,7 @@
 };
 
 const handleDetail = async (id: string) => {
-  await minicampStore.getDetail(id)
+  // await minicampStore.getDetail(id)
   router.push({
     name: "MinicampDetail",
     params: {id}

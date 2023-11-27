@@ -1,13 +1,23 @@
 <script lang="ts" setup>
-  import { onMounted } from 'vue';
+  import {onMounted, ref, type Ref} from 'vue'
   import { useMinicampStore } from '@/store/minicamp';
   import { useRoute } from 'vue-router';
 
   const id = useRoute().params.id.toString()
   const minicampStore = useMinicampStore()
 
-  onMounted(() => {
-    minicampStore.getDetail(id)
+  const isLoading: Ref<boolean> = ref(false)
+  const isError: Ref<boolean> = ref(false)
+
+  onMounted(async() => {
+    try {
+      isLoading.value = true
+      await minicampStore.getDetail(id)
+    } catch (error) {
+      isError.value = true
+    } finally {
+      isLoading.value = false
+    }
   })
 
   
@@ -24,10 +34,10 @@
             </div>
         </div>
         <section class="w-full flex justify-center items-start">
-            <div v-if="minicampStore.detail.isLoading" class="w-full max-w-[1080px] flex justify-center items-center">
+            <div v-if="isLoading" class="w-full max-w-[1080px] flex justify-center items-center">
               Please Wait ...
             </div>
-            <div v-else-if="minicampStore.detail.isError" class="w-full max-w-[1080px] flex justify-center items-center">
+            <div v-else-if="isError" class="w-full max-w-[1080px] flex justify-center items-center">
               Opss Error ...
             </div>
             <div v-else class="w-full max-w-[1080px] flex justify-between items-start">
