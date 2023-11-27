@@ -1,18 +1,20 @@
 <script setup lang="ts">
 import { useRoute } from "vue-router";
-import { onMounted, ref } from "vue";
+import { onMounted, ref, type Ref } from "vue";
 import router from "@/router";
 import bookmark from "@/assets/bookmark.svg";
 import IconRating from "@/components/icons/IconRating.vue";
 import FooterVue from "@/components/organisms/Footer.vue";
 import { useVideoStore } from "@/stores/video/index";
 import Carousel from "@/components/molecules/Carousel.vue";
+import { storeToRefs } from "pinia";
 
 const videoStore = useVideoStore();
-
+const { filterVideo } = storeToRefs(videoStore);
 const categories = ["Engineering", "Design", "Product", "Marketing"];
 const { category } = useRoute().query;
 const filter = ref(category);
+const search: Ref<string> = ref("");
 
 onMounted(() => videoStore.getAll());
 
@@ -72,7 +74,7 @@ const handleDelete = (id: number) => {
             </button>
           </div>
         </div>
-        <div class="w-full bg-slate-100 h-52"></div>
+        <div class="w-full bg-slate-100"><Carousel /></div>
       </div>
     </div>
 
@@ -163,12 +165,13 @@ const handleDelete = (id: number) => {
           type="text"
           placeholder="Cari kelas untuk pekerjaan impianmu.."
           class="col-span-2 border-2 px-3 py-2 rounded-md"
+          v-model="search"
         />
       </div>
 
       <div class="grid grid-cols-4 mt-7 gap-3">
         <div
-          v-for="(item, index) in videoStore.list"
+          v-for="(item, index) in filterVideo(search)"
           :key="index"
           class="col-span-4 md:col-span-2 lg:col-span-1 border-2 rounded-lg"
         >

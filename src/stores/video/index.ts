@@ -30,6 +30,8 @@ export const useVideoStore = defineStore("post", {
         }
       );
 
+      console.log(data);
+
       this.list = data.data;
     },
 
@@ -113,5 +115,12 @@ export const useVideoStore = defineStore("post", {
     },
   },
 
-  getters: {},
+  getters: {
+    filterVideo(state: IState) {
+      return (search: string) =>
+        state.list.filter((item) =>
+          item.title.toLocaleLowerCase().includes(search.toLocaleLowerCase())
+        );
+    },
+  },
 });

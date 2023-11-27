@@ -1,26 +1,26 @@
 <script setup lang="ts">
-import { reactive } from "vue";
+import { reactive, ref } from "vue";
 
 const data = reactive({
   slides: [
     {
       image:
-        "https://daisyui.com/images/stock/photo-1625726411847-8cbb60cc71e6.jpg",
+        "https://minibootcamp.s3.ap-southeast-1.amazonaws.com/banner/file-1694678297269",
     },
     {
       image:
-        "https://daisyui.com/images/stock/photo-1609621838510-5ad474b7d25d.jpg",
+        "https://minibootcamp.s3.ap-southeast-1.amazonaws.com/banner/file-1694678309396",
     },
     {
       image:
-        "https://daisyui.com/images/stock/photo-1414694762283-acccc27bca85.jpg",
+        "https://minibootcamp.s3.ap-southeast-1.amazonaws.com/banner/file-1694678324082",
     },
     {
       image:
-        "https://daisyui.com/images/stock/photo-1665553365602-b2fb8e5d1707.jpg",
+        "https://minibootcamp.s3.ap-southeast-1.amazonaws.com/banner/file-1694678342982",
     },
   ],
-  currentIndex: 0,
+  currentIndex: ref(0),
 });
 
 const prevSlide = () => {
@@ -34,23 +34,44 @@ const nextSlide = () => {
 </script>
 
 <template>
-  <div class="relative">
-    <div class="carousel w-full z-[-1]">
+  <div class="relative overflow-hidden">
+    <div class="slider-container">
       <div
-        v-for="(slide, index) in data.slides"
+        v-for="(slide, index) in [...data.slides, ...data.slides.slice(0, 2)]"
         :key="index"
-        :id="`slide${index + 1}`"
-        class="carousel-item relative w-full"
-        :class="{ hidden: data.currentIndex !== index }"
+        :style="{ transform: `translateX(-${data.currentIndex * 100}%)` }"
+        class="slider-item transition-transform duration-500 ease-in-out"
       >
-        <img :src="slide.image" class="w-full" />
-        <div
-          class="absolute flex justify-between transform -translate-y-1/2 left-5 right-5 top-1/2"
-        >
-          <a href="#" @click.prevent="prevSlide" class="btn btn-circle">❮</a>
-          <a href="#" @click.prevent="nextSlide" class="btn btn-circle">❯</a>
-        </div>
+        <img :src="slide.image" class="w-[500px]" />
       </div>
+    </div>
+
+    <div
+      class="absolute flex justify-between items-center w-full h-full top-0 left-0"
+    >
+      <a href="#" @click.prevent="prevSlide" class="btn btn-circle left-5">❮</a>
+      <a href="#" @click.prevent="nextSlide" class="btn btn-circle right-5"
+        >❯</a
+      >
     </div>
   </div>
 </template>
+
+<style scoped>
+.slider-container {
+  display: flex;
+  gap: 30px;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  width: max-content;
+}
+
+.slider-item {
+  box-sizing: border-box;
+  width: 300px;
+}
+
+.btn-circle {
+  /* Add your button styles here */
+}
+</style>
