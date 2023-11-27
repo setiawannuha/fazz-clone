@@ -22,14 +22,17 @@ const formRegister = reactive<IForm>({
 });
 
 const handleSubmit = async () => {
-  const { data } = await authStore.loginAction({
-    email: formRegister.email,
-    password: formRegister.password,
-  });
-  localStorage.setItem("token", data.data.token);
-  console.log(data.data);
-  authStore.data.email = data.data.user.email;
-  router.push("/");
+  try {
+    const { data } = await authStore.loginAction({
+      email: formRegister.email,
+      password: formRegister.password,
+    });
+    localStorage.setItem("token", data.data.token);
+    authStore.data.email = data.data.user.email;
+    router.push("/");
+  } catch (error) {
+    window.alert(error);
+  }
 };
 </script>
 
