@@ -13,8 +13,10 @@ interface IForm {
 import logo from "@/assets/logo.png";
 import Input from "@/components/molecules/Input.vue";
 import { reactive } from "vue";
-import { registerAction } from "@/store/post/auth";
 import { useRouter } from "vue-router";
+import { useAuthStore } from "@/stores/auth/index";
+
+const authStore = useAuthStore();
 
 const router = useRouter();
 
@@ -27,11 +29,11 @@ const formRegister = reactive<IForm>({
   term: false,
 });
 
-const handleSubmit = () => {
+const handleSubmit = async () => {
   if (formRegister.password !== formRegister.repeatPassword) {
     window.alert("Password tidak sama");
   } else {
-    registerAction({
+    const responese = await authStore.registerAction({
       email: formRegister.email,
       password: formRegister.password,
     });

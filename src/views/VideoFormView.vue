@@ -12,57 +12,59 @@ interface IForm {
 <script setup lang="ts">
 import logo from "@/assets/logo.png";
 import Input from "@/components/molecules/Input.vue";
-import { onMounted, reactive } from "vue";
-import { createCourse } from "@/store/post/video";
+import { reactive } from "vue";
 import { useRouter, useRoute } from "vue-router";
-import { getDetailVideo } from "@/store/get/video";
-import { state } from "@/store/video/video.store";
-import { editCourse } from "@/store/put/video";
+import { useVideoStore } from "@/stores/video/index";
+
+const videoStore = useVideoStore();
+
+const { createVideo, editVideo } = videoStore;
 
 const router = useRouter();
 const route = useRoute();
 const { id } = route.query;
 
 const formVideo = reactive<IForm>({
-  title: id ? state.detail.title : "",
-  description: id ? state.detail.description : "",
-  cover: id ? state.detail.cover : "",
-  rating: id ? state.detail.rating : 0,
-  level: id ? state.detail.level : "",
-  price: id ? state.detail.price : 0,
+  title: id ? videoStore.detail.title : "",
+  description: id ? videoStore.detail.description : "",
+  cover: id ? videoStore.detail.cover : "",
+  rating: id ? videoStore.detail.rating : 0,
+  level: id ? videoStore.detail.level : "",
+  price: id ? videoStore.detail.price : 0,
 });
 
-const handleSubmit = () => {
+const handleCreate = async () => {
+  try {
+    const responese = await createVideo({
+      description: formVideo.description,
+      cover: formVideo.cover,
+      rating: formVideo.rating,
+      level: formVideo.level,
+      price: formVideo.price,
+      title: formVideo.title,
+    });
+
+    router.push("online-course");
+  } catch (error) {
+    window.alert(error);
+    console.log(error);
+  }
+};
+
+const handleSubmit = async () => {
   if (id) {
     const finalID = id.toLocaleString();
-    editCourse(
-      parseInt(finalID),
-      {
-        description: formVideo.description,
-        cover: formVideo.cover,
-        rating: formVideo.rating,
-        level: formVideo.level,
-        price: formVideo.price,
-        title: formVideo.title,
-      },
-      () => {
-        router.push("/online-course");
-      }
-    );
+    const responese = await editVideo(parseInt(finalID), {
+      description: formVideo.description,
+      cover: formVideo.cover,
+      rating: formVideo.rating,
+      level: formVideo.level,
+      price: formVideo.price,
+      title: formVideo.title,
+    });
+    router.push("online-course");
   } else {
-    createCourse(
-      {
-        description: formVideo.description,
-        cover: formVideo.cover,
-        rating: formVideo.rating,
-        level: formVideo.level,
-        price: formVideo.price,
-        title: formVideo.title,
-      },
-      () => {
-        router.push("/online-course");
-      }
-    );
+    handleCreate();
   }
 };
 </script>
@@ -76,9 +78,7 @@ const handleSubmit = () => {
         ><img :src="logo" class="w-24" alt=""
       /></RouterLink>
       <div class="text-center mb-10">
-        <h3 v-if="id" class="text-xl font-semibold mb-2">
-          Edit Course {{ state.detail.title }}
-        </h3>
+        <h3 v-if="id" class="text-xl font-semibold mb-2">Edit Course</h3>
         <h3 v-else="id" class="text-xl font-semibold mb-2">Buat Course</h3>
       </div>
       <form class="w-full flex flex-col gap-4" @submit.prevent="handleSubmit">
@@ -86,42 +86,42 @@ const handleSubmit = () => {
           type="text"
           placeholder="Masukkan judul..."
           label="Judul"
-          :default-value="id ? state.detail.title : ''"
+          :default-value="id ? videoStore.detail.title : ''"
           @passing-value="(value) => (formVideo.title = String(value))"
         />
         <Input
           type="text"
           placeholder="Masukkan deskripsi..."
           label="Deskripsi"
-          :default-value="id ? state.detail.description : ''"
+          :default-value="id ? videoStore.detail.description : ''"
           @passing-value="(value) => (formVideo.description = String(value))"
         />
         <Input
           type="text"
           placeholder="Masukkan url cover..."
           label="Url Cover"
-          :default-value="id ? state.detail.cover : ''"
+          :default-value="id ? videoStore.detail.cover : ''"
           @passing-value="(value) => (formVideo.cover = String(value))"
         />
         <Input
           type="number"
           placeholder="Masukkan Rating..."
           label="Rating"
-          :default-value="id ? state.detail.rating : ''"
+          :default-value="id ? videoStore.detail.rating : ''"
           @passing-value="(value) => (formVideo.rating = Number(value))"
         />
         <Input
           type="text"
           placeholder="Masukkan level..."
           label="Level"
-          :default-value="id ? state.detail.level : ''"
+          :default-value="id ? videoStore.detail.level : ''"
           @passing-value="(value) => (formVideo.level = String(value))"
         />
         <Input
           type="number"
           placeholder="Masukkan harga..."
           label="Harga"
-          :default-value="id ? state.detail.price : ''"
+          :default-value="id ? videoStore.detail.price : ''"
           @passing-value="(value) => (formVideo.price = Number(value))"
         />
 

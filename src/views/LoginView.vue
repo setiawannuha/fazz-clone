@@ -9,8 +9,10 @@ interface IForm {
 import logo from "@/assets/logo.png";
 import Input from "@/components/molecules/Input.vue";
 import { reactive } from "vue";
-import { loginAction } from "@/store/post/auth";
 import { useRouter } from "vue-router";
+import { useAuthStore } from "@/stores/auth/index";
+
+const authStore = useAuthStore();
 
 const router = useRouter();
 
@@ -19,16 +21,13 @@ const formRegister = reactive<IForm>({
   email: "",
 });
 
-const handleSubmit = () => {
-  loginAction(
-    {
-      email: formRegister.email,
-      password: formRegister.password,
-    },
-    () => {
-      router.push("/");
-    }
-  );
+const handleSubmit = async () => {
+  const { data } = await authStore.loginAction({
+    email: formRegister.email,
+    password: formRegister.password,
+  });
+  localStorage.setItem("token", data.data.token);
+  router.push("/");
 };
 </script>
 

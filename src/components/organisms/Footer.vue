@@ -1,9 +1,9 @@
 <script lang="ts">
-  export default {
-    name: 'FooterComponent',
-    inheritAttrs: false,
-    customOptions: {}
-  }
+export default {
+  name: "FooterComponent",
+  inheritAttrs: false,
+  customOptions: {},
+};
 </script>
 
 <script setup lang="ts">
@@ -14,7 +14,7 @@ import youtube from "@/assets/youtube.svg";
 import Phone from "@/components/icons/IconPhone.vue";
 import Mail from "@/components/icons/IconMail.vue";
 import { useRoute } from "vue-router";
-const {path} = useRoute()
+const { path } = useRoute();
 </script>
 
 <template>
@@ -74,12 +74,14 @@ const {path} = useRoute()
 
     <hr class="my-7" />
 
-    <div class="flex justify-between mb-5 text-neutral">
+    <div
+      class="flex justify-between mb-5 text-neutral flex-col-reverse lg:flex-row gap-5"
+    >
       <p>
         © <span class="font-semibold">2020 - 2023 Fazztrack.</span> All Rights
         Reserved
       </p>
-      <div class="flex gap-3">
+      <div class="flex gap-3 flex-col lg:flex-row">
         <span class="flex gap-2 items-center"><Phone /> +6281132010888</span>
         <span class="flex gap-2 items-center"><Mail /> hello@fazztrack</span>
       </div>

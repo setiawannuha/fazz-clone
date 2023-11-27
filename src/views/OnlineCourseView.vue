@@ -1,19 +1,20 @@
 <script setup lang="ts">
 import { useRoute } from "vue-router";
-import { onMounted, ref, watch } from "vue";
+import { onMounted, ref } from "vue";
 import router from "@/router";
 import bookmark from "@/assets/bookmark.svg";
 import IconRating from "@/components/icons/IconRating.vue";
-import { getDetailVideo, getVideo } from "@/store/get/video";
-import { state } from "@/store/video/video.store";
 import FooterVue from "@/components/organisms/Footer.vue";
-import { deleteCourse } from "@/store/delete/video";
+import { useVideoStore } from "@/stores/video/index";
+import Carousel from "@/components/molecules/Carousel.vue";
+
+const videoStore = useVideoStore();
 
 const categories = ["Engineering", "Design", "Product", "Marketing"];
 const { category } = useRoute().query;
 const filter = ref(category);
 
-onMounted(() => getVideo());
+onMounted(() => videoStore.getAll());
 
 const handleCategory = (item: string) => {
   router.push({
@@ -26,7 +27,7 @@ const handleCategory = (item: string) => {
 };
 
 const handleEdit = async (id: number) => {
-  await getDetailVideo(id);
+  await videoStore.getDetail(id);
   router.push({
     name: "video form",
     query: {
@@ -34,11 +35,15 @@ const handleEdit = async (id: number) => {
     },
   });
 };
+
+const handleDelete = (id: number) => {
+  videoStore.deleteVideo(id);
+};
 </script>
 
 <template>
   <div>
-    <nav class="sticky top-16 bg-[#f6c9a9] text-center py-3">
+    <nav class="sticky top-16 bg-[#f6c9a9] text-center py-3 z-10">
       Belum siap ikut test?
       <span class="text-[#f16d1b] font-semibold underline"
         >Ikut Kelas Persiapan Bootcamp</span
@@ -47,10 +52,14 @@ const handleEdit = async (id: number) => {
     <div>
       <div class="px-5 lg:px-20 py-6">
         <div
-          class="bg-[#fef3ec] w-full flex px-16 py-7 gap-8 rounded-md mb-7 flex-col lg:flex-row"
+          class="bg-[#fef3ec] w-full grid grid-cols-3 px-5 lg:px-16 py-7 gap-2 lg:gap-8 rounded-md mb-7 flex-col lg:flex-row"
         >
-          <div class="bg-white w-2/5"></div>
-          <div class="flex flex-col gap-3 items-start">
+          <img
+            src="https://www.fazztrack.com/_ipx/f_webp&q_100&fit_cover/img/bootcamps/frame-1.jpg "
+            alt="alumni"
+            class="rounded-lg col-span-3 lg:col-span-1 mx-auto"
+          />
+          <div class="flex flex-col gap-3 items-start col-span-3 lg:col-span-2">
             <h3 class="text-2xl font-bold text-[#505358]">
               Ubah Hidupmu Sekarang Juga
             </h3>
@@ -67,7 +76,9 @@ const handleEdit = async (id: number) => {
       </div>
     </div>
 
-    <nav class="sticky top-16 bg-white px-5 lg:px-20 py-3 flex gap-5">
+    <nav
+      class="sticky top-16 bg-white px-5 lg:px-20 py-3 flex gap-5 overflow-x-auto overflow-y-hidden"
+    >
       <RouterLink :to="`/online-course`">
         <span
           :class="`${
@@ -101,7 +112,9 @@ const handleEdit = async (id: number) => {
           kamu lebih terstruktur</span
         >
         <div class="grid grid-cols-4 mt-8">
-          <div class="col-span-2 lg:col-span-1 bg-white p-5 rounded-lg">
+          <div
+            class="col-span-4 sm:col-span-2 lg:col-span-1 bg-white p-5 rounded-lg"
+          >
             <img
               src="https://production-fazztrack.sgp1.digitaloceanspaces.com/course-playlist/thumbnail-image/1691225434089"
               alt="playlist ui/ux"
@@ -155,9 +168,9 @@ const handleEdit = async (id: number) => {
 
       <div class="grid grid-cols-4 mt-7 gap-3">
         <div
-          v-for="(item, index) in state.list"
+          v-for="(item, index) in videoStore.list"
           :key="index"
-          class="col-span-2 lg:col-span-1 border-2 rounded-lg"
+          class="col-span-4 md:col-span-2 lg:col-span-1 border-2 rounded-lg"
         >
           <img :src="item.cover" alt="thumbnail course" class="rounded-t-lg" />
           <div class="p-5">
@@ -176,7 +189,7 @@ const handleEdit = async (id: number) => {
               <div class="flex justify-between">
                 <span class="text-neutral">Harga : </span>
                 <span class="text-md font-bold text-[#f16d1b]">{{
-                  item.price
+                  item.price === 0 ? "Gratis" : item.price
                 }}</span>
               </div>
             </div>
@@ -184,7 +197,7 @@ const handleEdit = async (id: number) => {
               <button @click="handleEdit(item.id)" class="btn btn-sm">
                 Edit
               </button>
-              <button @click="deleteCourse(item.id)" class="btn btn-sm">
+              <button @click="handleDelete(item.id)" class="btn btn-sm">
                 delete
               </button>
             </div>
