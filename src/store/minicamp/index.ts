@@ -71,6 +71,7 @@ export const useMinicampStore = defineStore("minicamp", {
       );
     },
     async update(id: string, payload: IMinicamp) {
+      console.log("isi", id, payload);
       return await axios.put(
         "https://fazz-track-sample-api.vercel.app/minicamp/" + id,
         payload,
@@ -80,6 +81,15 @@ export const useMinicampStore = defineStore("minicamp", {
           },
         }
       );
+    },
+  },
+
+  getters: {
+    filterMinicamp(state: IMinicampState) {
+      return (search: string) =>
+        state.list.data.filter((item) =>
+          item.title.toLocaleLowerCase().includes(search.toLocaleLowerCase())
+        );
     },
   },
 });

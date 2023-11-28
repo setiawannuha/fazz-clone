@@ -3,19 +3,26 @@
   import { onMounted, ref, type Ref } from 'vue';
   import { useRoute, useRouter, RouterLink } from 'vue-router';
   import { useMinicampStore } from '@/store/minicamp';
+import { storeToRefs } from 'pinia';
 
 
   const isLoading: Ref<boolean> = ref(false)
   const isError: Ref<boolean> = ref(false)
+  const search: Ref<string> = ref('')
 
   const categories = ["Disalurkan", "Engineering", "Design", "Product", "Marketing"];
   const { category } = useRoute().query;
   const filter = ref(category);
   const router = useRouter()
   const minicampStore = useMinicampStore()
+
+
+
   onMounted(() => {
     minicampStore.getAll()
   })
+
+  const {filterMinicamp} = storeToRefs(minicampStore)
 
   const handleCategory = (item: string) => {
   router.push({
@@ -40,7 +47,7 @@
   }
 
   const handleEdit = async (id: string) => {
-  // await minicampStore.getDetail(id)
+  await minicampStore.getDetail(id)
   router.push({
     name: "EditMinicamp",
     params: {id}
@@ -48,7 +55,6 @@
 };
 
 const handleDetail = async (id: string) => {
-  // await minicampStore.getDetail(id)
   router.push({
     name: "MinicampDetail",
     params: {id}
@@ -103,6 +109,11 @@ const handleDetail = async (id: string) => {
             </div>
           </div>
         </nav>
+        <div class="w-full flex justify-center items-center py-2">
+          <div class="w-full max-w-[1080px] px-5 lg:px-0">
+            <input type="searh" v-model="search" class="input input-bordered w-full md:w-[50%]" placeholder="Search .."/>
+          </div>
+        </div>
         <section class="w-full flex flex-col justify-center items-center gap-11 py-7 mb-24">
             <div class="w-full max-w-[1080px] text-black flex flex-col gap-3">
                 <div class="w-full">
@@ -113,7 +124,7 @@ const handleDetail = async (id: string) => {
                     Oppss Error ..
                   </div>
                     <div v-else class="px-5 md:px-0 max-w-[1080px] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center gap-4">
-                        <div v-for="(item, index) in minicampStore.list.data" :key="index" class="card bg-base-100 shadow-xl w-full relative">
+                        <div v-for="(item, index) in filterMinicamp(search)" :key="index" class="card bg-base-100 shadow-xl w-full relative">
                             <div class="absolute top-1 right-1 flex gap-2">
                                 <button @click="handleEdit(item?.id)" class="bg-primary p-1 rounded text-sm text-white font-semibold">Edit</button>
                                 <button @click="handleDelete(item?.id)" class="bg-red-500 p-1 rounded text-sm font-semibold">Delete</button>

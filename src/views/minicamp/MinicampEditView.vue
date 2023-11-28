@@ -16,6 +16,7 @@
     try {
       isLoading.value = true
       await minicampStore.getDetail(id)
+      console.log('ini ',minicampStore.detail.data)
     } catch (error) {
       isError.value = true
     } finally {
@@ -39,13 +40,12 @@
 
   const handleSubmit = async() => {
     try {
-      isLoading.value = true
-      const response = await minicampStore.update(id, payload)
+      const finalID = id
+      const response = await minicampStore.update(finalID, payload)
       console.log(response)
     } catch (error) {
       isError.value = true
     } finally {
-      isLoading.value = false
       router.push('/minicamp')
     }
   }
