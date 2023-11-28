@@ -1,18 +1,30 @@
 <script lang="ts" setup>
     import logo from "@/assets/logo.png";
   import type { IMinicamp } from "@/store/minicamp/interface";
-  import {reactive, ref, type Ref} from 'vue'
+  import {onMounted, reactive, ref, type Ref} from 'vue'
   import { useMinicampStore } from "@/store/minicamp";
   import Input from "@/components/molecules/Input.vue";
   import { useRouter, useRoute } from "vue-router";
 
+  const router = useRouter()
   const id = useRoute().params.id.toString()
   const minicampStore = useMinicampStore()
-  const router = useRouter()
   const isLoading: Ref<boolean> = ref(false)
   const isError: Ref<boolean> = ref(false)
 
-    const payload: IMinicamp = reactive({
+  onMounted(async() => {
+    try {
+      isLoading.value = true
+      await minicampStore.getDetail(id)
+      console.log('ini ',minicampStore.detail.data)
+    } catch (error) {
+      isError.value = true
+    } finally {
+      isLoading.value = false
+    }
+  })
+
+  const payload: IMinicamp = reactive({
     title: minicampStore.detail.data?.title || "",
     description: minicampStore.detail.data?.description || "",
     trainerName: minicampStore.detail.data?.trainerName || "",
@@ -28,16 +40,16 @@
 
   const handleSubmit = async() => {
     try {
-      isLoading.value = true
-      const response = await minicampStore.update(id, payload)
+      const finalID = id
+      const response = await minicampStore.update(finalID, payload)
       console.log(response)
     } catch (error) {
       isError.value = true
     } finally {
-      isLoading.value = false
       router.push('/minicamp')
     }
   }
+
 </script>
 
 <template>
@@ -53,7 +65,10 @@
           Create Minicamp
         </h3>
       </div>
-      <form class="w-full flex flex-col gap-4" @submit.prevent="handleSubmit">
+      <div v-if="isLoading" class="w-full flex flex-col justify-center items-center gap-4">
+        Please wait ..
+      </div>
+      <form v-else class="w-full flex flex-col gap-4" @submit.prevent="handleSubmit">
         <div class="flex justify-between items-start gap-4">
           <div class="flex-1 flex flex-col gap-3">
             <Input

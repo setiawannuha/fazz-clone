@@ -14,7 +14,9 @@ import { useProfileStore } from "@/store/profile";
 
 const profileStore = useProfileStore()
 const token = localStorage.getItem("token")
-onMounted(() => profileStore.getMyProfile());
+onMounted(async() => {
+  await profileStore.getMyProfile()
+});
 
 </script>
 <template>
